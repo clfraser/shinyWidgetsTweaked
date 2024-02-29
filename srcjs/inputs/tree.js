@@ -128,6 +128,7 @@ $.extend(treeWidgetBinding, {
     switcher.setAttribute('aria-checked', 'false');
     switcher.setAttribute('role', 'checkbox');
     switcher.setAttribute('tabindex', '0');
+    console.log('accessibility additions');
     switcher.classList.add('treejs-switcher');
     li.appendChild(switcher);
   } else {
