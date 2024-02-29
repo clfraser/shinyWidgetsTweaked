@@ -147,7 +147,8 @@ $.extend(treeWidgetBinding, {
 };
     
     const tree = new Tree("#" + el.id, config);
-    //console.log(tree.treeNodes);
+    console.log(tree);
+    
     treeWidgetBinding.updateStore(el, tree);
     if (config.hasOwnProperty("values")) {
       treeWidgetBinding.setValue(el, config.values);
