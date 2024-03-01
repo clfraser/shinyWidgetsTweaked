@@ -37,6 +37,32 @@ treeInput <- function(inputId,
                       closeDepth = 1,
                       returnValue = c("text", "id", "all"),
                       width = NULL) {
+  selected <- shiny::restoreInput(inputId, selected)
+  returnValue <- match.arg(returnValue)
+  if (!is.null(selected))
+    selected <- as.character(selected)
+  config <- dropNulls(list(
+    data = toJSON(choices, auto_unbox = FALSE, json_verbatim = TRUE),
+    closeDepth = closeDepth,
+    values = list1(selected)
+  ))
+  config <- toJSON(config, auto_unbox = TRUE, json_verbatim = TRUE)
+  tags$div(
+    class = "form-group shiny-input-container",
+    style = css(width = validateCssUnit(width)),
+    label_input(inputId, label),
+    tags$div(
+      id = inputId,
+      class = "tree-widget",
+      `data-return` = returnValue,
+      tags$script(
+        type = "application/json",
+        `data-for` = inputId,
+        HTML(config)
+      )
+    ),
+    html_dependency_tree()
+  )
 }
 
 
