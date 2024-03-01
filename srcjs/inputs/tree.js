@@ -137,6 +137,7 @@ $.extend(treeWidgetBinding, {
       checkbox.setAttribute('tabindex', '0');
 
 checkbox.addEventListener('keydown', function(e) {
+  console.log(e);
         const spacebarKeyCode = 'Space';
         const keyCode = e.code;
         // const item = document.getElementById("chkPref");
