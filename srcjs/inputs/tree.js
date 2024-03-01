@@ -149,9 +149,11 @@ checkbox.addEventListener('keydown', function(e) {
         } else if (checked === "true") {
           checkbox.setAttribute("aria-checked", "false");
           e.stopPropagation();
+          e.preventDefault();
         } else {
           checkbox.setAttribute("aria-checked", "true");
           e.stopPropagation();
+          e.preventDefault();
         }
 
         tree.onItemClick(node.id);
