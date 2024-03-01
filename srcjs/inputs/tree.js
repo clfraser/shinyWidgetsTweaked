@@ -3,6 +3,8 @@ import "shiny";
 import { updateLabel } from "../modules/utils";
 import Tree from "@widgetjs/tree";
 
+alert('It is running!')
+
     Tree.createLiEle = function(node, closed) {
   const li = document.createElement('li');
   li.classList.add('treejs-node');
