@@ -140,7 +140,7 @@ checkbox.addEventListener('keydown', function(e) {
         const spacebarKeyCode = 'Space';
         const keyCode = e.code;
         // const item = document.getElementById("chkPref");
-        const checked = item.getAttribute("aria-checked");
+        const checked = checkbox.getAttribute("aria-checked");
 
         if (keyCode !== spacebarKeyCode) {
           return;
