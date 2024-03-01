@@ -136,7 +136,20 @@ $.extend(treeWidgetBinding, {
       checkbox.setAttribute('role', 'checkbox');
       checkbox.setAttribute('tabindex', '0');
 
-checkbox.addEventListener('keydown', function(e) {
+      li.appendChild(checkbox);
+      const label = document.createElement('span');
+      label.classList.add('treejs-label');
+      const text = document.createTextNode(node.text);
+      label.appendChild(text);
+      li.appendChild(label);
+      li.nodeId = node.id;
+      return li;
+    };
+
+    const tree = new Tree("#" + el.id, config);
+    console.log(tree);
+
+    checkbox.addEventListener('keydown', function(e) {
   console.log(e);
         const spacebarKeyCode = 'Space';
         const keyCode = e.code;
@@ -153,21 +166,8 @@ checkbox.addEventListener('keydown', function(e) {
           e.stopPropagation();
         }
 
-        checkbox.dispatchEvent(new MouseEvent("click"));
+        tree.onItemClick(checkbox.nodeId);
       });
-
-      li.appendChild(checkbox);
-      const label = document.createElement('span');
-      label.classList.add('treejs-label');
-      const text = document.createTextNode(node.text);
-      label.appendChild(text);
-      li.appendChild(label);
-      li.nodeId = node.id;
-      return li;
-    };
-
-    const tree = new Tree("#" + el.id, config);
-    console.log(tree);
 
     treeWidgetBinding.updateStore(el, tree);
     if (config.hasOwnProperty("values")) {
