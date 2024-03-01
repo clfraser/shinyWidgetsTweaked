@@ -120,31 +120,45 @@ $.extend(treeWidgetBinding, {
     };
 
     Tree.createLiEle = function(node, closed) {
-  const li = document.createElement('li');
-  li.classList.add('treejs-node');
-  if (closed) li.classList.add('treejs-node__close');
-  if (node.children && node.children.length) {
-    const switcher = document.createElement('span');
-    switcher.setAttribute('aria-checked', 'false');
-    switcher.setAttribute('role', 'checkbox');
-    switcher.setAttribute('tabindex', '0');
-    console.log('accessibility additions');
-    switcher.classList.add('treejs-switcher');
-    li.appendChild(switcher);
-  } else {
-    li.classList.add('treejs-placeholder');
-  }
-  const checkbox = document.createElement('span');
-  checkbox.classList.add('treejs-checkbox');
-  li.appendChild(checkbox);
-  const label = document.createElement('span');
-  label.classList.add('treejs-label');
-  const text = document.createTextNode(node.text);
-  label.appendChild(text);
-  li.appendChild(label);
-  li.nodeId = node.id;
-  return li;
-};
+      const li = document.createElement('li');
+      li.classList.add('treejs-node');
+      if (closed) li.classList.add('treejs-node__close');
+      if (node.children && node.children.length) {
+        const switcher = document.createElement('span');
+        switcher.classList.add('treejs-switcher');
+        li.appendChild(switcher);
+      } else {
+        li.classList.add('treejs-placeholder');
+      }
+      const checkbox = document.createElement('span');
+      checkbox.classList.add('treejs-checkbox');
+      checkbox.setAttribute('aria-checked', 'false');
+      checkbox.setAttribute('role', 'checkbox');
+      checkbox.setAttribute('tabindex', '0');
+
+      checkbox.addEventListener('onKeyDown', function(keyCode) {
+        const spacebarKeyCode = 32;
+        // const item = document.getElementById("chkPref");
+        const checked = item.getAttribute("aria-checked");
+
+        if (keyCode && keyCode !== spacebarKeyCode) {
+          return;
+        } else if (checked === "true") {
+          checkbox.setAttribute("aria-checked", "false");
+        } else {
+          checkbox.setAttribute("aria-checked", "true");
+        }
+      });
+
+      li.appendChild(checkbox);
+      const label = document.createElement('span');
+      label.classList.add('treejs-label');
+      const text = document.createTextNode(node.text);
+      label.appendChild(text);
+      li.appendChild(label);
+      li.nodeId = node.id;
+      return li;
+    };
 
     const tree = new Tree("#" + el.id, config);
     console.log(tree);
