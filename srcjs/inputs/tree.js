@@ -3,6 +3,32 @@ import "shiny";
 import { updateLabel } from "../modules/utils";
 import Tree from "@widgetjs/tree";
 
+    Tree.createLiEle = function(node, closed) {
+  const li = document.createElement('li');
+  li.classList.add('treejs-node');
+  if (closed) li.classList.add('treejs-node__close');
+  if (node.children && node.children.length) {
+    const switcher = document.createElement('span');
+    switcher.setAttribute('aria-checked', 'false');
+    switcher.setAttribute('role', 'checkbox');
+    switcher.setAttribute('tabindex', '0');
+    console.log('accessibility additions');
+    switcher.classList.add('treejs-switcher');
+    li.appendChild(switcher);
+  } else {
+    li.classList.add('treejs-placeholder');
+  }
+  const checkbox = document.createElement('span');
+  checkbox.classList.add('treejs-checkbox');
+  li.appendChild(checkbox);
+  const label = document.createElement('span');
+  label.classList.add('treejs-label');
+  const text = document.createTextNode(node.text);
+  label.appendChild(text);
+  li.appendChild(label);
+  li.nodeId = node.id;
+  return li;
+};
 
 function collapseFromLeaf(tree, leafNode) {
   try {
@@ -118,33 +144,6 @@ $.extend(treeWidgetBinding, {
     config.loaded = function() {
       $(el).find(".treejs-nodes").first().css("padding-left", 0);
     };
-
-    Tree.createLiEle = function(node, closed) {
-  const li = document.createElement('li');
-  li.classList.add('treejs-node');
-  if (closed) li.classList.add('treejs-node__close');
-  if (node.children && node.children.length) {
-    const switcher = document.createElement('span');
-    switcher.setAttribute('aria-checked', 'false');
-    switcher.setAttribute('role', 'checkbox');
-    switcher.setAttribute('tabindex', '0');
-    console.log('accessibility additions');
-    switcher.classList.add('treejs-switcher');
-    li.appendChild(switcher);
-  } else {
-    li.classList.add('treejs-placeholder');
-  }
-  const checkbox = document.createElement('span');
-  checkbox.classList.add('treejs-checkbox');
-  li.appendChild(checkbox);
-  const label = document.createElement('span');
-  label.classList.add('treejs-label');
-  const text = document.createTextNode(node.text);
-  label.appendChild(text);
-  li.appendChild(label);
-  li.nodeId = node.id;
-  return li;
-};
     
     const tree = new Tree("#" + el.id, config);
     console.log(tree);
