@@ -136,18 +136,23 @@ $.extend(treeWidgetBinding, {
       checkbox.setAttribute('role', 'checkbox');
       checkbox.setAttribute('tabindex', '0');
 
-      checkbox.addEventListener('onKeyDown', function(keyCode) {
-        const spacebarKeyCode = 32;
+checkbox.addEventListener('keydown', function(e) {
+        const spacebarKeyCode = 'Space';
+        const keyCode = e.code;
         // const item = document.getElementById("chkPref");
         const checked = item.getAttribute("aria-checked");
 
-        if (keyCode && keyCode !== spacebarKeyCode) {
+        if (keyCode !== spacebarKeyCode) {
           return;
         } else if (checked === "true") {
           checkbox.setAttribute("aria-checked", "false");
+          e.stopPropagation();
         } else {
           checkbox.setAttribute("aria-checked", "true");
+          e.stopPropagation();
         }
+
+        checkbox.dispatchEvent(new MouseEvent("click"));
       });
 
       li.appendChild(checkbox);
