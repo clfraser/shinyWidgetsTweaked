@@ -154,7 +154,7 @@ checkbox.addEventListener('keydown', function(e) {
           e.stopPropagation();
         }
 
-        tree.onItemClick(checkbox.nodeId);
+        tree.onItemClick(checkbox.parent.nodeId);
       });
 
       li.appendChild(checkbox);
