@@ -119,6 +119,7 @@ $.extend(treeWidgetBinding, {
       $(el).find(".treejs-nodes").first().css("padding-left", 0);
     };
 
+    let tree;
     Tree.createLiEle = function(node, closed) {
       const li = document.createElement('li');
       li.classList.add('treejs-node');
@@ -136,20 +137,7 @@ $.extend(treeWidgetBinding, {
       checkbox.setAttribute('role', 'checkbox');
       checkbox.setAttribute('tabindex', '0');
 
-      li.appendChild(checkbox);
-      const label = document.createElement('span');
-      label.classList.add('treejs-label');
-      const text = document.createTextNode(node.text);
-      label.appendChild(text);
-      li.appendChild(label);
-      li.nodeId = node.id;
-      return li;
-    };
-
-    const tree = new Tree("#" + el.id, config);
-    console.log(tree);
-
-    checkbox.addEventListener('keydown', function(e) {
+checkbox.addEventListener('keydown', function(e) {
   console.log(e);
         const spacebarKeyCode = 'Space';
         const keyCode = e.code;
@@ -168,6 +156,19 @@ $.extend(treeWidgetBinding, {
 
         tree.onItemClick(checkbox.nodeId);
       });
+
+      li.appendChild(checkbox);
+      const label = document.createElement('span');
+      label.classList.add('treejs-label');
+      const text = document.createTextNode(node.text);
+      label.appendChild(text);
+      li.appendChild(label);
+      li.nodeId = node.id;
+      return li;
+    };
+
+    tree = new Tree("#" + el.id, config);
+    console.log(tree);
 
     treeWidgetBinding.updateStore(el, tree);
     if (config.hasOwnProperty("values")) {
